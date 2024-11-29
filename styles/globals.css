@@ -1,0 +1,27 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #1e1e1e;
+  color: white;
+}
+
+/* Estilo global para el texto */
+h1, h2 {
+  text-transform: uppercase;
+}
+
+/* Efecto de texto neón global */
+@keyframes neon {
+  0%, 100% {
+      text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff, 0 0 25px #ff00ff;
+  }
+  50% {
+      text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+  }
+}
+
+.neon-text {
+  color: #fff;
+  animation: neon 1.5s infinite alternate;
+}
