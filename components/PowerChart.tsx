@@ -29,7 +29,7 @@ const lineOptions = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'top',
+      position: 'top' as const,  // 'top' se define como un valor literal
     },
     title: {
       display: true,

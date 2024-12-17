@@ -1,39 +1,27 @@
-// pages/api/comments.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import { connectToDatabase } from '../../lib/mongodb';
-import cloudinary from 'cloudinary';
 
-cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+// Array en memoria para almacenar los comentarios (puede ser reemplazado por una base de datos)
+let comments: string[] = [];
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    const { comment, image } = req.body;
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
+    // Devuelve los comentarios almacenados
+    res.status(200).json({ comments });
+  } else if (req.method === 'POST') {
+    const { text } = req.body;
 
-    try {
-      let imageUrl = '';
-
-      if (image) {
-        const uploadResult = await cloudinary.v2.uploader.upload(image, {
-          folder: 'comments_images',
-        });
-        imageUrl = uploadResult.secure_url;
-      }
-
-      const { db } = await connectToDatabase();
-      const newComment = { comment, imageUrl, createdAt: new Date() };
-
-      await db.collection('comments').insertOne(newComment);
-
-      res.status(201).json({ message: 'Comentario guardado exitosamente', data: newComment });
-    } catch (error) {
-      console.error('Error al guardar el comentario:', error);
-      res.status(500).json({ message: 'Hubo un error al guardar el comentario' });
+    // Validar que el comentario no esté vacío
+    if (!text || text.trim() === '') {
+      return res.status(400).json({ message: 'Comentario vacío no permitido' });
     }
+
+    // Agregar el comentario al array
+    comments.push(text);
+
+    // Responder con un mensaje de éxito
+    res.status(200).json({ message: 'Comentario registrado correctamente' });
   } else {
+    // Método no permitido
     res.status(405).json({ message: 'Método no permitido' });
   }
 }

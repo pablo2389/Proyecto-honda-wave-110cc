@@ -1,42 +1,34 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { v2 as cloudinary } from 'cloudinary';
+import nextConnect from 'next-connect';  // No es necesario importar tipos explícitamente
+import multer from 'multer';
 
-// Configurar Cloudinary usando las variables de entorno
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_URL?.split('@')[1]?.split(':')[0] || '',
-  api_key: process.env.CLOUDINARY_URL?.split(':')[1]?.split('/')[0] || '',
-  api_secret: process.env.CLOUDINARY_URL?.split(':')[2]?.split('@')[0] || '',
+// Configuración de multer para almacenar las imágenes subidas
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: './public/uploads', // Aquí se almacenarán las imágenes
+    filename: (req, file, cb) => cb(null, file.originalname), // Nombre original del archivo
+  }),
 });
 
-type ResponseData = {
-  url?: string;
-  error?: string;
-};
+// Crear un manejador de rutas con next-connect
+const handler = nextConnect();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-  if (req.method === 'POST') {
-    try {
-      // Asegúrate de que recibas el campo 'imagePath' en el cuerpo de la solicitud
-      const { imagePath } = req.body;
+// Usamos upload.single('image') si estás subiendo una sola imagen
+handler.use(upload.single('image'));
 
-      if (!imagePath) {
-        return res.status(400).json({ error: 'No se recibió el archivo de imagen' });
-      }
+// Manejo de solicitud POST para agregar un comentario
+handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
+  const { comment } = req.body;
 
-      // Subir la imagen a Cloudinary
-      const result = await cloudinary.uploader.upload(imagePath, {
-        folder: 'tus_imagenes', // Carpeta en Cloudinary donde se guardarán las imágenes
-        public_id: `imagen_unica_${Date.now()}`, // Genera un ID único para cada imagen
-      });
-
-      // Responder con la URL segura de la imagen subida
-      return res.status(200).json({ url: result.secure_url });
-    } catch (error) {
-      console.error('Error al subir la imagen: ', error);
-      return res.status(500).json({ error: 'Error al subir la imagen' });
-    }
-  } else {
-    // Solo permite el método POST
-    res.status(405).json({ error: 'Método no permitido' });
+  if (!comment) {
+    return res.status(400).json({ message: 'El comentario no puede estar vacío.' });
   }
-}
+
+  // Lógica para manejar el comentario (guardar, mostrar, etc.)
+  console.log('Nuevo comentario recibido:', comment);
+
+  // Simular respuesta exitosa
+  res.status(200).json({ message: 'Comentario agregado correctamente', comment });
+});
+
+export default handler;

@@ -21,7 +21,7 @@
 
 /* Estilos de las imágenes */
 .image {
-  object-fit: cover;  /* Asegura que la imagen mantenga su proporción sin deformarse */
+  object-fit: cover;  /* Asegura que la imagen mantenga su proporción */
   width: 100%;  /* El ancho será siempre el 100% del contenedor */
   height: 400px; /* Fija la altura de todas las imágenes */
   max-width: 100%; /* Se ajusta al tamaño del contenedor, pero no se estira más allá del máximo */
@@ -36,9 +36,21 @@
 
 /* Mensaje de error cuando la imagen no se carga */
 .errorMessage {
-  font-size: 2rem;
-  color: #ff6347; /* Color rojo anaranjado */
-  font-weight: bold;
+  color: red;  /* Hace que el texto sea rojo */
+  font-size: 1.5rem;  /* Ajusta el tamaño de la fuente según sea necesario */
+  font-weight: bold;  /* Hace que el texto sea más grueso */
+  text-align: center;  /* Centra el texto */
+  padding: 10px;
+  border-radius: 5px;
+  transition: color 0.3s ease;  /* Transición suave para el color */
+  margin-bottom: 20px; /* Aumenta el espacio debajo del mensaje */
+  margin-top: 20px;  
+}
+
+/* Estilo al pasar el mouse (hover) */
+.errorMessage:hover {
+  color: #ff4c4c;  /* Cambia el color del texto a un rojo más claro o brillante */
+  cursor: pointer;  /* Cambia el cursor para indicar que es interactivo */
 }
 
 /* Estilos para los botones de navegación */
@@ -71,24 +83,4 @@
 /* Posicionamiento del botón "siguiente" */
 .navButtonNext {
   right: 10px;
-}
-
-/* Estilos para el mensaje de error */
-.errorMessage {
-  color: red;  /* Hace que el texto sea rojo */
-  font-size: 1.5rem;  /* Ajusta el tamaño de la fuente según sea necesario */
-  font-weight: bold;  /* Hace que el texto sea más grueso */
-  text-align: center;  /* Centra el texto */
-  padding: 10px;
-  border-radius: 5px;
-  transition: color 0.3s ease;  /* Transición suave para el color */
-  margin-bottom: 20px; /* Aumenta el espacio debajo del mensaje */
-  margin-top: 20px;  
-
-}
-
-/* Estilo al pasar el mouse (hover) */
-.errorMessage:hover {
-  color: #ff4c4c;  /* Cambia el color del texto a un rojo más claro o brillante */
-  cursor: pointer;  /* Cambia el cursor para indicar que es interactivo */
 }

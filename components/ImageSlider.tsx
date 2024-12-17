@@ -1,47 +1,38 @@
-import React, { useState } from 'react';
-import styles from '../styles/imageslider.module.css'; // Importar el archivo CSS Módulo
+import React from 'react';
+import { Box, IconButton } from '@mui/material';
+import Image from 'next/image';
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 
-const ImageSlider = () => {
-  const [currentImage, setCurrentImage] = useState(1); // Comienza con moto1.png
-  const [imageError, setImageError] = useState(false); // Estado para manejar el error de imagen
+interface ImageSliderProps {
+  validImages: string[];
+}
 
-  const totalImages = 17; // Cambia a la cantidad de imágenes que tengas
+const ImageSlider: React.FC<ImageSliderProps> = ({ validImages }) => {
+  const [currentIndex, setCurrentIndex] = React.useState(0);
 
-  // Función para ir a la imagen siguiente
-  const nextImage = () => {
-    setImageError(false); // Reseteamos el error al cambiar la imagen
-    setCurrentImage((prevImage) => (prevImage === totalImages ? 1 : prevImage + 1));
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + validImages.length) % validImages.length);
   };
 
-  // Función para ir a la imagen anterior
-  const prevImage = () => {
-    setImageError(false); // Reseteamos el error al cambiar la imagen
-    setCurrentImage((prevImage) => (prevImage === 1 ? totalImages : prevImage - 1));
-  };
-
-  // Función para manejar el error de carga de la imagen
-  const handleImageError = () => {
-    setImageError(true); // Si la imagen no se carga, se activa el error
-    setTimeout(nextImage, 500); // Cambiar a la siguiente imagen después de un corto retraso
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % validImages.length);
   };
 
   return (
-    <div className={styles.sliderContainer}>
-      <div className={styles.imageContainer}>
-        {imageError ? (
-          <div className={styles.errorMessage}>110 al piso</div> // Mensaje cuando la imagen falla
-        ) : (
-          <img
-            className={styles.image}
-            src={`/images/moto${currentImage}.png`} // Ruta a las imágenes en 'public/images'
-            alt={`Imagen ${currentImage}`}
-            onError={handleImageError} // Si hay un error de carga, pasa al siguiente
-          />
-        )}
-      </div>
-      <button className={styles.navButtonPrev} onClick={prevImage}>←</button>
-      <button className={styles.navButtonNext} onClick={nextImage}>→</button>
-    </div>
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <IconButton onClick={handlePrev}>
+        <ChevronLeft />
+      </IconButton>
+      <Image
+        src={validImages[currentIndex]}
+        alt={`Imagen ${currentIndex + 1}`}
+        width={500}
+        height={300}
+      />
+      <IconButton onClick={handleNext}>
+        <ChevronRight />
+      </IconButton>
+    </Box>
   );
 };
 

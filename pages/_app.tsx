@@ -1,41 +1,62 @@
-import React from 'react';
-import { Box, CssBaseline, Toolbar } from '@mui/material';
-import Menu from '../components/Menu';  // Componente de navegación global
-import PowerChart from '../components/PowerChart';  // Componente del gráfico
-import ImageSlider from '../components/ImageSlider';  // Componente del slider
-import '../styles/globals.css';  // Asegúrate de que este archivo esté importado
-import { AppProps } from 'next/app'; // Importa AppProps desde Next.js
+import React, { useState, useEffect } from 'react';
+import { CssBaseline, Container, Box } from '@mui/material';
+import Head from 'next/head';
+import Image from 'next/image';
+import PowerChart from '../components/PowerChart';
+import ImageSlider from '../components/ImageSlider';
+import ImageUpload from '../components/ImageUpload';
+import CommentForm from '../components/CommentForm';
+import Comments from '../components/Comments';
 
-const App = ({ Component, pageProps }: AppProps) => {  // Asigna el tipo a los props
+interface Comment {
+  text: string;
+}
+
+const App = () => {
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [validImages, setValidImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetch('/api/comments')
+      .then((res) => res.json())
+      .then((data) => setComments(data.comments || []));
+  }, []);
+
+  useEffect(() => {
+    const images = [
+      'moto1.png', 'moto2.png', 'moto3.png', 'moto4.png',
+      'moto6.png', 'moto7.png', 'moto8.png', 'moto10.png',
+      'moto11.png', 'moto12.png', 'moto13.png', 'moto14.png', 'moto15.png',
+    ];
+    const validImages = images.map((img) => `/images/${img}`);
+    setValidImages(validImages);
+  }, []);
+
+  const addComment = (comment: string) => {
+    fetch('/api/comments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ comment }),
+    }).then(() => {
+      setComments((prev) => [...prev, { text: comment }]);
+    });
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <CssBaseline />
-      <Menu /> {/* Componente de navegación */}
-
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          bgcolor: 'background.default',
-          p: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 0,
-        }}
-      >
-        {/* Título con el texto actualizado */}
-        <h1 className="neon-text" style={{ fontSize: '4rem', marginBottom: '10px' }}>
-       El Blog de las 110cc {/* Aquí se cambió el texto */}
-        </h1>
-
-        <div style={{ marginTop: '10px' }}>
-          <ImageSlider /> {/* Componente del slider */}
-        </div>
-
-        <PowerChart /> {/* Componente del gráfico */}
-      </Box>
+      <Head>
+        <title>Blog 110cc</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Container>
+        <h1 style={{ textAlign: 'center', fontSize: '4rem' }}>Blog de las 110cc</h1>
+        <ImageSlider validImages={validImages} />
+        <PowerChart />
+        <ImageUpload />
+        <CommentForm onSubmit={addComment} />
+        <Comments comments={comments} />
+      </Container>
     </Box>
   );
 };
