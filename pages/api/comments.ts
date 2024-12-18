@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 // Array en memoria para almacenar los comentarios (puede ser reemplazado por una base de datos)
-let comments: string[] = [];
+const comments: string[] = [];
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {

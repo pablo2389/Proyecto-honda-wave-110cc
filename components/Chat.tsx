@@ -2,10 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Box, Typography, List, ListItem } from '@mui/material';
 import axios from 'axios';
 
+interface Message {
+  user: string;
+  text: string;
+  timestamp: string;
+  imageUrl?: string; // Si la URL de imagen es opcional
+}
+
 const Chat = () => {
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string>(''); // Tipo de dato para el mensaje
+  const [messages, setMessages] = useState<Message[]>([]); // Definir el tipo de datos como Message
+  const [loading, setLoading] = useState<boolean>(false); // Estado de carga
 
   // Función para obtener los mensajes
   const fetchMessages = async () => {
@@ -39,7 +46,7 @@ const Chat = () => {
         text: message,
         user: 'Usuario', // Aquí puedes obtener el nombre del usuario autenticado
       });
-      setMessage('');
+      setMessage(''); // Limpiar el mensaje después de enviar
       fetchMessages(); // Actualizar los mensajes después de enviar
     } catch (error) {
       console.error('Error al enviar el mensaje:', error);

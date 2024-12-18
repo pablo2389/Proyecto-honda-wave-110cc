@@ -5,9 +5,15 @@ import Menu from '../components/Menu';  // Asegúrate de que este componente est
 import HomeButton from '../components/HomeButton';  // Importa el componente de HomeButton para redirigir
 import Comments from '../components/Comments';  // Importa el componente de comentarios
 
+interface Comment {
+  text: string;
+  user: string;
+  timestamp: string;
+}
+
 const Home = () => {
   const [comment, setComment] = useState<string>(''); // Estado para el comentario
-  const [comments, setComments] = useState<any[]>([]); // Estado para los comentarios guardados
+  const [comments, setComments] = useState<Comment[]>([]); // Estado para los comentarios guardados
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,4 +1,3 @@
-// lib/mongodb.ts
 import { MongoClient } from 'mongodb';
 
 // URI de conexión a MongoDB desde las variables de entorno
@@ -22,5 +21,5 @@ if (process.env.NODE_ENV === 'development') {
 export async function connectToDatabase() {
   const client = await clientPromise;
   const db = client.db(process.env.MONGODB_DB); // Nombre de la base de datos en MongoDB
-  return { client, db };
+  return { client, db };    
 }
