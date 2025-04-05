@@ -1,8 +1,9 @@
-// next.config.js
-const nextConfig = {
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
   eslint: {
-    ignoreDuringBuilds: true, // 🚨 Esto permite deployar aunque haya errores de lint
+    ignoreDuringBuilds: true,
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
