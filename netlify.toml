@@ -1,6 +1,8 @@
 [build]
-command = "npm run build"
-publish = ".next"
+  command = "npm run build"
+  publish = "out" # o ".next", depende si estás usando SSG o SSR
 
-[[plugins]]
-package = "@netlify/plugin-nextjs"
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

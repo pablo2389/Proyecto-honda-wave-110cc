@@ -26,7 +26,9 @@
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
-    "recharts": "^2.13.3"
+    "react-slick": "^0.30.3",
+    "recharts": "^2.13.3",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.9.0",

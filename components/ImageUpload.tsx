@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Box, Typography, Button } from '@mui/material';
 
 const ImageUpload = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -32,10 +33,15 @@ const ImageUpload = () => {
   };
 
   return (
-    <div>
+    <Box sx={{ mt: 3, textAlign: 'center' }}>
+      <Typography variant="h4" gutterBottom>
+        Subí la imagen de tu moto acá
+      </Typography>
       <input type="file" onChange={handleImageChange} />
-      <button onClick={handleUpload}>Subir Imagen</button>
-    </div>
+      <Button variant="contained" onClick={handleUpload} sx={{ mt: 2 }}>
+        Subir Imagen
+      </Button>
+    </Box>
   );
 };
 

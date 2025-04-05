@@ -1,37 +1,42 @@
-import React from 'react';
-import { Box, IconButton } from '@mui/material';
+import Slider from 'react-slick';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { Box } from '@mui/material';
 
-interface ImageSliderProps {
-  validImages: string[];
-}
-
-const ImageSlider: React.FC<ImageSliderProps> = ({ validImages }) => {
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + validImages.length) % validImages.length);
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % validImages.length);
+const ImageSlider = ({ validImages }: { validImages: string[] }) => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: true,
+    adaptiveHeight: true,
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <IconButton onClick={handlePrev}>
-        <ChevronLeft />
-      </IconButton>
-      <Image
-        src={validImages[currentIndex]}
-        alt={`Imagen ${currentIndex + 1}`}
-        width={500}
-        height={300}
-      />
-      <IconButton onClick={handleNext}>
-        <ChevronRight />
-      </IconButton>
+    <Box sx={{ mt: 4, mb: 4, maxWidth: '100%' }}>
+      <Slider {...settings}>
+        {validImages.map((imgSrc, index) => (
+          <Box
+            key={index}
+            sx={{
+              position: 'relative',
+              width: '100%',
+              height: { xs: 300, sm: 400, md: 500 },
+            }}
+          >
+            <Image
+              src={imgSrc}
+              alt={`Imagen ${index + 1}`}
+              layout="fill"
+              objectFit="contain" // 🔥 clave para que no se recorten
+              priority={index === 0}
+            />
+          </Box>
+        ))}
+      </Slider>
     </Box>
   );
 };

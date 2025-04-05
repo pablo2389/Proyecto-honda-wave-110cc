@@ -23,7 +23,7 @@
 .image {
   object-fit: cover;  /* Asegura que la imagen mantenga su proporción */
   width: 100%;  /* El ancho será siempre el 100% del contenedor */
-  height: 400px; /* Fija la altura de todas las imágenes */
+  height: 500px; /* Fija la altura de todas las imágenes */
   max-width: 100%; /* Se ajusta al tamaño del contenedor, pero no se estira más allá del máximo */
   border-radius: 10px;
   transition: transform 0.3s ease-in-out; /* Efecto hover */
