@@ -1,20 +1,20 @@
+// ✅ CORREGIDO
+import clientPromise from '@/lib/mongo';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { connectToDatabase } from '@/lib/mongo';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { db } = await connectToDatabase();
+  const client = await clientPromise;
+  const db = client.db('blog');
+  const messages = db.collection('messages');
 
   if (req.method === 'GET') {
-    const mensajes = await db.collection('messages').find().toArray();
-    return res.status(200).json(mensajes);
+    const result = await messages.find({}).toArray();
+    res.status(200).json(result);
+  } else if (req.method === 'POST') {
+    const newMessage = req.body;
+    await messages.insertOne(newMessage);
+    res.status(201).json({ message: 'Mensaje agregado' });
+  } else {
+    res.status(405).json({ message: 'Método no permitido' });
   }
-
-  if (req.method === 'POST') {
-    const nuevoMensaje = req.body;
-    await db.collection('messages').insertOne(nuevoMensaje);
-    return res.status(201).json({ message: 'Mensaje guardado correctamente' });
-  }
-
-  res.setHeader('Allow', ['GET', 'POST']);
-  res.status(405).end(`Método ${req.method} no permitido`);
 }
