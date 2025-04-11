@@ -1,6 +1,5 @@
-// ✅ CORREGIDO
-import Image from 'next/image';
 import React from 'react';
+import Image from 'next/image';
 
 interface DetailsProps {
   title: string;
@@ -14,9 +13,9 @@ const Details: React.FC<DetailsProps> = ({ title, image }) => (
       <Image
         src={`/images/${image}`}
         alt={title}
-        width={800}
-        height={500}
-        style={{ width: '100%', height: 'auto' }}
+        width={500}
+        height={300}
+        style={{ objectFit: 'cover' }}
       />
     </div>
   </details>

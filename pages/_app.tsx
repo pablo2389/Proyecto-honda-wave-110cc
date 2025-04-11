@@ -1,4 +1,3 @@
-// ✅ CORREGIDO
 import type { AppProps } from 'next/app';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
