@@ -1,23 +1,13 @@
-import { MongoClient } from 'mongodb';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { connectToDatabase } from '@/lib/mongo';
 
-const client = new MongoClient(process.env.MONGODB_URI!);
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { db } = await connectToDatabase();
 
-const clientPromise: Promise<MongoClient> = 
-  process.env.NODE_ENV === 'development'
-    ? (() => {
-        const globalWithMongo = global as typeof globalThis & {
-          _mongoClientPromise?: Promise<MongoClient>;
-        };
-        if (!globalWithMongo._mongoClientPromise) {
-          globalWithMongo._mongoClientPromise = client.connect();
-        }
-        return globalWithMongo._mongoClientPromise;
-      })()
-    : client.connect();
+  if (req.method === 'GET') {
+    const chats = await db.collection('chat').find({}).toArray();
+    return res.status(200).json(chats);
+  }
 
-// Función para conectarse a la base de datos
-export async function connectToDatabase() {
-  const client = await clientPromise;
-  const db = client.db();
-  return { client, db };
+  return res.status(405).json({ error: 'Method not allowed' });
 }
