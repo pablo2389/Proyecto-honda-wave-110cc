@@ -1,26 +1,22 @@
 import { MongoClient } from 'mongodb';
 
-const uri = process.env.MONGODB_URI!;
-const options = {};
+const client = new MongoClient(process.env.MONGODB_URI!);
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
+const clientPromise: Promise<MongoClient> =
+  process.env.NODE_ENV === 'development'
+    ? (() => {
+        const globalWithMongo = global as typeof globalThis & {
+          _mongoClientPromise?: Promise<MongoClient>;
+        };
+        if (!globalWithMongo._mongoClientPromise) {
+          globalWithMongo._mongoClientPromise = client.connect();
+        }
+        return globalWithMongo._mongoClientPromise;
+      })()
+    : client.connect();
 
-if (!process.env.MONGODB_URI) {
-  throw new Error("Por favor define la variable MONGODB_URI en .env.local");
+export async function connectToDatabase() {
+  const client = await clientPromise;
+  const db = client.db();
+  return { client, db };
 }
-
-if (process.env.NODE_ENV === "development") {
-  // En desarrollo, usamos una variable global para evitar múltiples conexiones
-  if (!(global as any)._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    (global as any)._mongoClientPromise = client.connect();
-  }
-  clientPromise = (global as any)._mongoClientPromise;
-} else {
-  // En producción, siempre creamos una nueva conexión
-  client = new MongoClient(uri, options);
-  clientPromise = client.connect();
-}
-
-export default clientPromise;

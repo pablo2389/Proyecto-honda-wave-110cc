@@ -2,8 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDatabase } from '@/lib/mongo';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Acá se usa directamente:
-  const { db } = await connectToDatabase(); // ✅ Aquí estás accediendo a la base de datos
+  const { db } = await connectToDatabase();
 
   if (req.method === 'GET') {
     const mensajes = await db.collection('messages').find().toArray();
