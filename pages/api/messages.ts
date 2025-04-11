@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'; // Importa los tipos correctos
 import { connectToDatabase } from '../../lib/mongo'; // Asegúrate de que esta importación esté bien
-import { ObjectId } from 'mongodb'; // Importa el tipo ObjectId de MongoDB si es necesario para el manejo de IDs
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Esperamos la promesa y extraemos `db` del objeto devuelto
