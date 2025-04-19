@@ -12,10 +12,11 @@ const Details: React.FC<DetailsProps> = ({ title, image }) => (
     <div className="details-content">
       <Image
         src={`/images/${image}`}
-        alt={title}
+        alt={title || 'Imagen de detalles'}  // Mejorar accesibilidad
         width={500}
         height={300}
-        style={{ objectFit: 'cover' }}
+        layout="responsive"  // Esto hace que la imagen se ajuste de forma responsive
+        objectFit="cover"    // Puedes usar este en lugar de "style"
       />
     </div>
   </details>

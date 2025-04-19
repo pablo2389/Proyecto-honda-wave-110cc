@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import Menu from '../components/Menu';
 import ImageUpload from '../components/ImageUpload';
+import Image from 'next/image';  // Importa el componente Image de Next.js
 
 const Home = () => {
   const [images, setImages] = useState<string[]>([]);
@@ -18,7 +19,7 @@ const Home = () => {
 
     // ✅ Generamos del 1 al 15, excluyendo 5 y 9
     for (let i = 1; i <= 15; i++) {
-      if (i === 5 || i === 9) continue;
+      if (i === 5 || i === 9) continue;  // Omite las imágenes moto5.png y moto9.png
       localImages.push(`/images/moto${i}.png`);
     }
 
@@ -66,11 +67,13 @@ const Home = () => {
             }}
           >
             {images.map((url, index) => (
-              <img
+              <Image
                 key={index}
                 src={url}
                 alt={`Moto ${index + 1}`}
-                style={{ width: '200px', height: 'auto', borderRadius: '10px' }}
+                width={200}  // Ajusta el tamaño de la imagen
+                height={200} // Ajusta el tamaño de la imagen
+                style={{ borderRadius: '10px' }}
               />
             ))}
           </Box>
