@@ -1,42 +1,31 @@
 {
   "compilerOptions": {
-    "target": "esnext",  // Usar "esnext" para mantener compatibilidad con versiones recientes de ECMAScript
-    "module": "esnext",  // Cambio a "esnext" para trabajar con módulos modernos
+    "target": "esnext",
+    "module": "esnext",
     "lib": [
-      "dom", 
-      "dom.iterable", 
+      "dom",
       "esnext"
     ],
-    "allowJs": true,  // Permitir archivos JavaScript si es necesario
-    "skipLibCheck": true,  // Saltar la comprobación de tipos en las librerías para evitar errores innecesarios
-    "strict": true,  // Habilitar todas las verificaciones estrictas
-    "noEmit": true,  // No generar archivos de salida, solo comprobar tipos
-    "esModuleInterop": true,  // Permitir la interoperabilidad con módulos CommonJS
-    "moduleResolution": "bundler",  // Usar "bundler" para ser compatible con bundlers modernos
-    "resolveJsonModule": true,  // Permitir importar archivos JSON como módulos
-    "isolatedModules": true,  // Garantiza que cada archivo sea tratado como un módulo independiente
-    "jsx": "preserve",  // Mantener JSX sin cambios para usar con React
-    "incremental": true,  // Habilitar la compilación incremental
-    "forceConsistentCasingInFileNames": true,  // Asegurar que los nombres de archivos sean consistentes en mayúsculas y minúsculas
-    "baseUrl": ".",  // Establecer la raíz del proyecto como base
-    "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@models/*": [
-        "models/*"
-      ]
-    }
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "isolatedModules": true
   },
   "include": [
-    "next-env.d.ts", 
-    "**/*.ts", 
-    "**/*.tsx", 
-    "pages/**/*.ts", 
-    "components/**/*", 
-    "lib/**/*", 
-    "models/**/*", 
-    ".next/types/**/*.ts"
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/**/*.ts",
+    "components/**/*",
+    "lib/**/*"
   ],
   "exclude": [
     "node_modules"

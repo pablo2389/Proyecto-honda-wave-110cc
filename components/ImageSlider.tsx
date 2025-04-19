@@ -1,6 +1,6 @@
-import Slider from 'react-slick';
-import Image from 'next/image';
 import { Box } from '@mui/material';
+import Image from 'next/image';
+import Slider from 'react-slick';
 
 const ImageSlider = ({ validImages }: { validImages: string[] }) => {
   const settings = {
