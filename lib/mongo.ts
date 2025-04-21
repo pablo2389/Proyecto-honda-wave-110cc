@@ -1,24 +1,16 @@
 import { MongoClient } from 'mongodb';
 
-declare global {
-  namespace NodeJS {
-    interface Global {
-      _mongoClientPromise?: Promise<MongoClient>;
-    }
-  }
-}
-
 const uri = process.env.MONGODB_URI!;
 const options = {};
 
-let client;
-let clientPromise: Promise<MongoClient>;
-
-if (!global._mongoClientPromise) {
-  client = new MongoClient(uri, options);
-  global._mongoClientPromise = client.connect();
+declare global {
+  // Solo usamos esto si no está ya definido
+  // @ts-ignore: Evita conflicto de tipos en compilaciones posteriores
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-clientPromise = global._mongoClientPromise;
+// Creamos el cliente solo una vez y lo reutilizamos
+const clientPromise: Promise<MongoClient> =
+  global._mongoClientPromise ?? (global._mongoClientPromise = new MongoClient(uri, options).connect());
 
 export default clientPromise;
