@@ -4,12 +4,15 @@ const uri = process.env.MONGODB_URI!;
 const options = {};
 
 declare global {
-  // Solo usamos esto si no está ya definido
-  // @ts-ignore: Evita conflicto de tipos en compilaciones posteriores
-  var _mongoClientPromise: Promise<MongoClient> | undefined;
+  // Definir la variable global correctamente, sin necesidad de @ts-ignore
+  namespace NodeJS {
+    interface Global {
+      _mongoClientPromise?: Promise<MongoClient>;
+    }
+  }
 }
 
-// Creamos el cliente solo una vez y lo reutilizamos
+// Usamos el operador de coalescencia nula para reutilizar la promesa existente o crear una nueva
 const clientPromise: Promise<MongoClient> =
   global._mongoClientPromise ?? (global._mongoClientPromise = new MongoClient(uri, options).connect());
 
