@@ -1,8 +1,8 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true, // 🚫 Ignora errores de ESLint en producción
   },
+  // Otras opciones si tenés
 };
 
 module.exports = nextConfig;
