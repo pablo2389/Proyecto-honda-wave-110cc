@@ -16,7 +16,8 @@ const Details: React.FC<DetailsProps> = ({ title, image }) => (
         width={500}
         height={300}
         layout="responsive"  // Esto hace que la imagen se ajuste de forma responsive
-        objectFit="cover"    // Puedes usar este en lugar de "style"
+        objectFit="cover"    // Ajuste para evitar distorsión
+        priority  // Asegura que la imagen cargue primero si es importante
       />
     </div>
   </details>

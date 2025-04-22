@@ -2,7 +2,11 @@ import { Box } from '@mui/material';
 import Image from 'next/image';
 import Slider from 'react-slick';
 
-const ImageSlider = ({ validImages }: { validImages: string[] }) => {
+interface ImageSliderProps {
+  validImages: string[];
+}
+
+const ImageSlider: React.FC<ImageSliderProps> = ({ validImages }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -32,7 +36,7 @@ const ImageSlider = ({ validImages }: { validImages: string[] }) => {
               alt={`Imagen ${index + 1}`}
               layout="fill"
               objectFit="contain" // 🔥 clave para que no se recorten
-              priority={index === 0}
+              priority={index === 0} // Hace que la primera imagen cargue primero
             />
           </Box>
         ))}
