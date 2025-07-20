@@ -74,6 +74,7 @@ const Home = () => {
                 width={200}  // Ajusta el tamaño de la imagen
                 height={200} // Ajusta el tamaño de la imagen
                 style={{ borderRadius: '10px' }}
+                priority={index === 0} // Solo la primera imagen tiene prioridad
               />
             ))}
           </Box>
