@@ -1,5 +1,6 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Link, Box } from '@mui/material';
+import Link from 'next/link';
+import { AppBar, Toolbar, Typography, Box } from '@mui/material';
 
 const Navbar = () => {
   return (
@@ -9,13 +10,13 @@ const Navbar = () => {
           Blog de Motos 110cc
         </Typography>
         <Box>
-          <Link href="#" color="inherit" underline="none" sx={{ mx: 1 }}>
+          <Link href="/" style={{ margin: '0 8px', color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>
             Inicio
           </Link>
-          <Link href="#" color="inherit" underline="none" sx={{ mx: 1 }}>
+          <Link href="/galeria" style={{ margin: '0 8px', color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>
             Galería
           </Link>
-          <Link href="#" color="inherit" underline="none" sx={{ mx: 1 }}>
+          <Link href="/contacto" style={{ margin: '0 8px', color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>
             Contacto
           </Link>
         </Box>

@@ -1,17 +1,9 @@
+// pages/index.tsx
 import React, { useEffect, useState } from 'react';
 import {
-  Box,
-  CssBaseline,
-  Typography,
-  Container,
-  CircularProgress,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
+  Box, Typography, Container, CircularProgress, Grid, Card, CardMedia, CardContent,
 } from '@mui/material';
 import Image from 'next/image';
-import Navbar from '../components/Navbar';
 
 const Home = () => {
   const [images, setImages] = useState<string[]>([]);
@@ -20,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     const localImages: string[] = [];
     for (let i = 1; i <= 15; i++) {
-      if (i === 5 || i === 9) continue; // Omitir moto5.png y moto9.png
+      if (i === 5 || i === 9) continue;
       localImages.push(`/images/moto${i}.png`);
     }
     setImages(localImages);
@@ -29,9 +21,6 @@ const Home = () => {
 
   return (
     <>
-      <CssBaseline />
-      <Navbar />
-
       <Container maxWidth="md" sx={{ py: 6 }}>
         <Typography variant="h3" fontWeight="bold" gutterBottom align="center">
           Blog de Motos 110cc
